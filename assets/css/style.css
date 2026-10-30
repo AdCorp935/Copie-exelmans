@@ -2256,6 +2256,7 @@ p { margin: 0; }
 
 .marquee-track span:hover { background: var(--yellow); color: var(--ink); }
 .marquee-track span { padding: 2px 8px; border-radius: 6px; }
+.marque:hover { filter: none; opacity: 1; }
 
 .faq-q:hover,
 .faq-q[aria-expanded="true"] { color: var(--ink); }
