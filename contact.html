@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact et devis — Copie Exelmans · Imprimerie Paris 16e</title>
+<meta name="description" content="Demandez un devis d'impression à Copie Exelmans, 40 boulevard Exelmans, 75016 Paris. 09 83 65 33 03 · copiexelmans@gmail.com.">
+<meta name="theme-color" content="#ffd400">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=1">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Copie Exelmans, accueil">
+      <span class="brand-mark" aria-hidden="true">CE</span>
+      <span class="brand-name">Copie Exelmans<small>Imprimerie · Paris 16e</small></span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Navigation principale">
+      <a href="catalogue.html">Prestations</a>
+      <a href="index.html#pourquoi">Pourquoi nous</a>
+      <a href="index.html#process">Méthode</a>
+      <a aria-current="page" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="header-tel" href="tel:+33983653303">09 83 65 33 03</a>
+    </div>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="container center" style="padding-top: clamp(48px, 7vw, 84px);">
+    <span class="badge">
+      <span class="dot" aria-hidden="true"></span>
+      Ouvert du lundi au vendredi, de 10h à 19h
+    </span>
+    <h1 class="h-page" style="max-width: 700px;">Parlez-nous de votre <span class="grad">impression</span></h1>
+    <p class="lead" style="max-width: 480px;">
+      Dites-nous ce qu'il vous faut, même approximativement. On revient vers vous avec un devis
+      avant toute impression.
+    </p>
+  </section>
+
+  <div class="container">
+    <div class="contact-grid reveal">
+
+      <!-- ===================== COORDONNÉES ===================== -->
+      <div>
+        <dl class="infos">
+          <div class="info">
+            <dt>Adresse</dt>
+            <dd>40 Boulevard Exelmans, 75016 Paris</dd>
+          </div>
+          <div class="info">
+            <dt>Téléphone</dt>
+            <dd><a href="tel:+33983653303">09 83 65 33 03</a></dd>
+          </div>
+          <div class="info">
+            <dt>Email</dt>
+            <dd><a href="mailto:copiexelmans@gmail.com">copiexelmans@gmail.com</a></dd>
+          </div>
+          <div class="info">
+            <dt>Horaires</dt>
+            <dd>Lundi — Vendredi, 10h à 19h</dd>
+          </div>
+          <div class="info">
+            <dt>Métro</dt>
+            <dd>Exelmans (ligne 9)</dd>
+          </div>
+        </dl>
+
+        <!--
+          Plan stylisé, cliquable vers Google Maps : aucun script tiers, donc
+          aucun cookie ni bandeau de consentement à gérer.
+        -->
+        <a class="map"
+           href="https://www.google.fr/maps/place/Imprimerie+Exelmans/@48.8417298,2.2611747,17z/data=!3m1!4b1!4m6!3m5!1s0x47e67abcb924ce7d:0xdd89add92006c4fa!8m2!3d48.8417298!4d2.2637496!16s%2Fg%2F11csrhh3yn"
+           target="_blank" rel="noopener"
+           aria-label="Ouvrir l'itinéraire vers le 40 boulevard Exelmans, 75016 Paris, dans une nouvelle fenêtre">
+          <span class="map-road-h" aria-hidden="true"></span>
+          <span class="map-road-v" aria-hidden="true"></span>
+          <span class="map-pin" aria-hidden="true">
+            <b>Copie Exelmans · 40 bd Exelmans</b>
+            <i></i>
+          </span>
+          <span class="map-link">Voir l'itinéraire →</span>
+        </a>
+      </div>
+
+      <!-- ===================== FORMULAIRE ===================== -->
+      <div class="form-card">
+
+        <form class="form" id="contact-form" method="post" action="mailto:copiexelmans@gmail.com" enctype="text/plain">
+
+          <p class="form-error" id="contact-error" role="alert" hidden></p>
+
+          <fieldset class="group" style="border: 0; padding: 0; margin: 0; min-width: 0;">
+            <legend class="group-label" style="padding: 0;">Je suis</legend>
+            <div class="chips chips--profile">
+              <label class="chip">
+                <input type="radio" name="profil" value="Particulier" checked>
+                <span>Particulier</span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="profil" value="Professionnel">
+                <span>Professionnel</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field-label">Nom *</span>
+              <input type="text" name="nom" placeholder="Camille Durand" autocomplete="name" required>
+            </label>
+            <label class="field">
+              <span class="field-label">Société</span>
+              <input type="text" name="societe" placeholder="Optionnel" autocomplete="organization">
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span class="field-label">Téléphone *</span>
+              <input type="tel" name="telephone" placeholder="06 12 34 56 78" autocomplete="tel" required>
+            </label>
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input type="email" name="email" placeholder="camille@exemple.fr" autocomplete="email">
+            </label>
+          </div>
+
+          <fieldset class="group" style="border: 0; padding: 0; margin: 0; min-width: 0;">
+            <legend class="group-label" style="padding: 0;">Ce qu'il me faut</legend>
+            <div class="chips">
+              <label class="chip">
+                <input type="checkbox" name="besoins" value="Photocopies et impression" checked>
+                <span>Photocopies et impression</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="besoins" value="Cartes et papeterie">
+                <span>Cartes et papeterie</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="besoins" value="Flyers et affiches">
+                <span>Flyers et affiches</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="besoins" value="Reliure et finitions">
+                <span>Reliure et finitions</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="besoins" value="Autre projet">
+                <span>Autre projet</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label class="field">
+            <span class="field-label">Votre projet *</span>
+            <textarea name="message" rows="4" required
+              placeholder="Ex. 500 flyers A5 recto-verso, papier brillant, pour vendredi."></textarea>
+          </label>
+
+          <button class="btn btn--dark btn--block" type="submit">Demander un devis</button>
+
+          <p class="form-note">
+            Pour joindre un fichier, envoyez-le à
+            <a href="mailto:copiexelmans@gmail.com">copiexelmans@gmail.com</a>.
+            Vos coordonnées ne sont pas transmises à des tiers.
+            <a href="mentions-legales.html#donnees">En savoir plus</a>
+          </p>
+        </form>
+
+        <!-- Confirmation : affichée par main.js après envoi. -->
+        <div class="success" id="contact-success" role="status" hidden>
+          <span class="success-bar" aria-hidden="true"></span>
+          <h2>Demande envoyée</h2>
+          <p id="contact-success-text">
+            Merci. Nous revenons vers vous avec un devis.
+            Pour une urgence, appelez le 09 83 65 33 03.
+          </p>
+          <button class="btn btn--outline btn--sm" type="button" id="contact-reset">Envoyer une autre demande</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="container">
+  <div class="footer-simple">
+    <span>Copie Exelmans — Imprimerie et reprographie</span>
+    <span>40 Boulevard Exelmans, 75016 Paris · Lun — Ven, 10h — 19h</span>
+    <span><a href="mentions-legales.html">Mentions légales</a></span>
+  </div>
+</footer>
+
+<!-- Raccourcis affichés après le premier écran (gérés par main.js). -->
+<button class="to-top" type="button" aria-label="Revenir en haut de la page">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5M5 12l7-7 7 7"></path>
+  </svg>
+</button>
+
+<div class="mobile-bar" aria-label="Actions rapides">
+  <a class="btn btn--outline" href="tel:+33983653303">Appeler</a>
+  <a class="btn btn--accent" href="#contact-form">Aller au formulaire</a>
+</div>
+
+<script src="assets/js/main.js?v=1" defer></script>
+</body>
+</html>

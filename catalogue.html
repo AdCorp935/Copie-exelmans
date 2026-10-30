@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prestations — Copie Exelmans · Imprimerie Paris 16e</title>
+<meta name="description" content="Photocopies, impression numérique, cartes de visite, flyers, affiches, reliure et finitions au 40 boulevard Exelmans, Paris 16e.">
+<meta name="theme-color" content="#ffd400">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=1">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Copie Exelmans, accueil">
+      <span class="brand-mark" aria-hidden="true">CE</span>
+      <span class="brand-name">Copie Exelmans<small>Imprimerie · Paris 16e</small></span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Navigation principale">
+      <a aria-current="page" href="catalogue.html">Prestations</a>
+      <a href="index.html#pourquoi">Pourquoi nous</a>
+      <a href="index.html#process">Méthode</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="header-tel" href="tel:+33983653303">09 83 65 33 03</a>
+      <a class="btn btn--dark btn--sm" href="contact.html">Demander un devis</a>
+    </div>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="container" style="padding-top: clamp(48px, 7vw, 84px);">
+    <div class="center">
+      <span class="badge">Prestations</span>
+      <h1 class="h-page" style="max-width: 820px;">Tout ce qui s'imprime, <span class="grad">un seul comptoir</span></h1>
+      <p class="lead" style="max-width: 520px;">
+        Les tarifs dépendent du format, du papier et de la quantité : chaque travail est chiffré
+        avant impression, au comptoir ou par email.
+      </p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filtrer les prestations par famille">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">Tout</button>
+      <button class="filter" type="button" data-filter="copies" aria-pressed="false">Photocopies et impression</button>
+      <button class="filter" type="button" data-filter="papeterie" aria-pressed="false">Cartes et papeterie</button>
+      <button class="filter" type="button" data-filter="communication" aria-pressed="false">Flyers et affiches</button>
+      <button class="filter" type="button" data-filter="finitions" aria-pressed="false">Reliure et finitions</button>
+    </div>
+    <p class="visually-hidden" id="filters-status" role="status" aria-live="polite"></p>
+
+    <!-- Les prix ne sont pas affichés : remplacer « sur devis » par vos tarifs
+         si vous souhaitez les publier (ex. « 0,10 € la page »). -->
+    <div class="families">
+
+      <!-- ===================== PHOTOCOPIES ET IMPRESSION ===================== -->
+      <section class="family reveal" id="copies" data-family="copies" aria-labelledby="fam-copies">
+        <div class="family-head">
+          <div style="min-width: 0;">
+            <span class="family-chip chip-ink" aria-hidden="true"></span>
+            <h2 id="fam-copies">Photocopies et impression</h2>
+            <p>
+              Le quotidien de l'atelier : copies, impressions depuis vos fichiers et numérisation,
+              en noir et blanc comme en couleur.
+            </p>
+          </div>
+          <div class="family-aside">
+            <span class="tags">
+              <span class="tag">Noir &amp; blanc</span><span class="tag">Couleur</span>
+              <span class="tag">A4</span><span class="tag">A3</span><span class="tag">Recto-verso</span>
+            </span>
+            <a class="link-u" href="contact.html" style="color: #0b0b0b;">Demander un devis →</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Photocopie noir et blanc</span></span>
+            <span class="row-note">A4 ou A3, recto ou recto-verso</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Photocopie couleur</span></span>
+            <span class="row-note">A4 ou A3, papier standard ou épais</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Impression de vos fichiers</span></span>
+            <span class="row-note">Depuis une clé USB ou par email : PDF, documents, photos</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Numérisation</span></span>
+            <span class="row-note">Scan de vos documents en PDF, envoi par email</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+      </section>
+
+      <!-- ===================== CARTES ET PAPETERIE ===================== -->
+      <section class="family reveal" id="papeterie" data-family="papeterie" aria-labelledby="fam-papeterie">
+        <div class="family-head">
+          <div style="min-width: 0;">
+            <span class="family-chip chip-yellow" aria-hidden="true"></span>
+            <h2 id="fam-papeterie">Cartes et papeterie</h2>
+            <p>
+              Ce qui se donne de la main à la main : cartes de visite, correspondance et
+              invitations, sur des papiers choisis avec vous.
+            </p>
+          </div>
+          <div class="family-aside">
+            <span class="tags">
+              <span class="tag">Cartes de visite</span><span class="tag">Invitations</span>
+              <span class="tag">Faire-part</span><span class="tag">Papiers épais</span>
+            </span>
+            <a class="link-u" href="contact.html" style="color: #0b0b0b;">Demander un devis →</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Cartes de visite</span></span>
+            <span class="row-note">85 × 55 mm, recto ou recto-verso, mat ou brillant</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">En-têtes et cartes de correspondance</span></span>
+            <span class="row-note">Pour les cabinets, commerces et associations</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Faire-part et invitations</span></span>
+            <span class="row-note">Mariage, naissance, événement</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Cartes de vœux</span></span>
+            <span class="row-note">Personnelles ou d'entreprise</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+      </section>
+
+      <!-- ===================== FLYERS ET AFFICHES ===================== -->
+      <section class="family reveal" id="communication" data-family="communication" aria-labelledby="fam-communication">
+        <div class="family-head">
+          <div style="min-width: 0;">
+            <span class="family-chip chip-white" aria-hidden="true"></span>
+            <h2 id="fam-communication">Flyers et affiches</h2>
+            <p>
+              Les supports qui font venir du monde : flyers, dépliants, affiches de vitrine et
+              menus, pour les commerces, les événements et les associations.
+            </p>
+          </div>
+          <div class="family-aside">
+            <span class="tags">
+              <span class="tag">Flyers</span><span class="tag">Dépliants</span>
+              <span class="tag">Affiches</span><span class="tag">Menus</span>
+            </span>
+            <a class="link-u" href="contact.html" style="color: #0b0b0b;">Demander un devis →</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Flyers</span></span>
+            <span class="row-note">A6, A5 ou A4, recto ou recto-verso</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Dépliants</span></span>
+            <span class="row-note">Pliés en deux ou trois volets</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Affiches</span></span>
+            <span class="row-note">A3, autres formats sur demande</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Menus et tarifs</span></span>
+            <span class="row-note">Pour restaurants et commerces, plastifiés si besoin</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+      </section>
+
+      <!-- ===================== RELIURE ET FINITIONS ===================== -->
+      <section class="family reveal" id="finitions" data-family="finitions" aria-labelledby="fam-finitions">
+        <div class="family-head">
+          <div style="min-width: 0;">
+            <span class="family-chip chip-grey" aria-hidden="true"></span>
+            <h2 id="fam-finitions">Reliure et finitions</h2>
+            <p>
+              Pour que vos documents repartent terminés : reliure, plastification et découpe,
+              réalisées sur place.
+            </p>
+          </div>
+          <div class="family-aside">
+            <span class="tags">
+              <span class="tag">Reliure</span><span class="tag">Mémoires</span>
+              <span class="tag">Plastification</span><span class="tag">Découpe</span>
+            </span>
+            <a class="link-u" href="contact.html" style="color: #0b0b0b;">Demander un devis →</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Reliure de documents</span></span>
+            <span class="row-note">Dossiers, rapports, présentations</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Mémoires et thèses</span></span>
+            <span class="row-note">Impression et reliure, couverture couleur possible</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Plastification</span></span>
+            <span class="row-note">A4 et A3</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+        <div class="row">
+          <span>
+            <span class="row-name"><span class="mk">Découpe</span></span>
+            <span class="row-note">Coupe au format, mise en série</span>
+          </span>
+          <span class="row-price">sur devis</span>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="cta-panel reveal">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="rainbow-bar" style="width: 180px;" aria-hidden="true"></div>
+      <h2 style="max-width: 660px;">Votre projet n'est pas dans la liste ?</h2>
+      <p class="lead">
+        Décrivez-le ou envoyez un exemple : nous vous disons ce qu'il est possible d'imprimer,
+        sur quel papier et dans quel délai.
+      </p>
+      <div class="actions">
+        <a class="btn btn--accent btn--lg" href="contact.html">Envoyer une demande</a>
+        <a class="btn btn--ghost btn--lg" href="tel:+33983653303">09 83 65 33 03</a>
+      </div>
+      <p class="cta-note">Devis avant impression · Particuliers et professionnels · Paris 16e</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="container">
+  <div class="footer-simple">
+    <span>Copie Exelmans — 40 Boulevard Exelmans, 75016 Paris</span>
+    <span>Lun — Ven, 10h — 19h · <a href="tel:+33983653303">09 83 65 33 03</a></span>
+    <span><a href="mentions-legales.html">Mentions légales</a></span>
+  </div>
+</footer>
+
+<!-- Raccourcis affichés après le premier écran (gérés par main.js). -->
+<button class="to-top" type="button" aria-label="Revenir en haut de la page">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5M5 12l7-7 7 7"></path>
+  </svg>
+</button>
+
+<div class="mobile-bar" aria-label="Actions rapides">
+  <a class="btn btn--outline" href="tel:+33983653303">Appeler</a>
+  <a class="btn btn--accent" href="contact.html">Demander un devis</a>
+</div>
+
+<script src="assets/js/main.js?v=1" defer></script>
+</body>
+</html>
