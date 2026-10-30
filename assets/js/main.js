@@ -213,10 +213,30 @@
     });
   }
 
-  /* == 4. FAQ (une seule réponse ouverte à la fois) ===================== */
+  /* == 4. FAQ (une seule réponse ouverte à la fois, ouverture animée) == */
   function initFaq() {
     var items = $$(".faq-item");
     if (!items.length) return;
+
+    var animate = function (panel, open) {
+      if (reduceMotion || !panel.animate) {
+        panel.hidden = !open;
+        return;
+      }
+      if (open) panel.hidden = false;
+      var h = panel.scrollHeight;
+      panel.style.overflow = "hidden";
+      var anim = panel.animate(
+        open
+          ? [{ height: "0px", opacity: 0 }, { height: h + "px", opacity: 1 }]
+          : [{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }],
+        { duration: 380, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" }
+      );
+      anim.onfinish = function () {
+        panel.style.overflow = "";
+        if (!open) panel.hidden = true;
+      };
+    };
 
     var panels = items.map(function (item) {
       var btn = $(".faq-q", item);
@@ -229,15 +249,15 @@
       btn.addEventListener("click", function () {
         var willOpen = btn.getAttribute("aria-expanded") !== "true";
         panels.forEach(function (p) {
-          if (!p) return;
+          if (!p || p.btn.getAttribute("aria-expanded") !== "true") return;
           p.btn.setAttribute("aria-expanded", "false");
-          p.panel.hidden = true;
           p.item.classList.remove("is-open");
+          animate(p.panel, false);
         });
         if (willOpen) {
           btn.setAttribute("aria-expanded", "true");
-          panel.hidden = false;
           item.classList.add("is-open");
+          animate(panel, true);
         }
       });
 
@@ -398,7 +418,247 @@
     });
   }
 
+
+  /* == 8. Titres révélés mot à mot ======================================
+     Chaque mot glisse depuis sous sa ligne de base. Les éléments internes
+     (mot surligné, exposant) restent intacts : ils comptent pour un mot. */
+  function initSplitTitles() {
+    if (reduceMotion) return;
+    var titles = $$(".h-hero, .h-page, .h-section, .h-sub, .cta-panel h2, .store h2");
+    if (!titles.length) return;
+
+    var i = 0;
+    var wrap = function (node, parent) {
+      var w = document.createElement("span");
+      w.className = "w";
+      var inner = document.createElement("span");
+      inner.className = "wi";
+      inner.style.setProperty("--i", i++);
+      inner.appendChild(node);
+      w.appendChild(inner);
+      parent.appendChild(w);
+    };
+
+    titles.forEach(function (title) {
+      i = 0;
+      var nodes = Array.prototype.slice.call(title.childNodes);
+      var frag = document.createDocumentFragment();
+      var pendingSup = null;
+      nodes.forEach(function (node) {
+        if (node.nodeType === 3) {
+          var parts = node.textContent.split(/(\s+)/);
+          parts.forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) {
+              frag.appendChild(document.createTextNode(" "));
+            } else {
+              wrap(document.createTextNode(part), frag);
+            }
+          });
+        } else if (node.nodeName === "BR") {
+          frag.appendChild(node);
+        } else if (node.nodeName === "SUP" && frag.lastChild && frag.lastChild.className === "w") {
+          // « 16<sup>e</sup> » : l'exposant reste collé à son mot.
+          frag.lastChild.firstChild.appendChild(node);
+        } else {
+          wrap(node, frag);
+        }
+      });
+      title.textContent = "";
+      title.appendChild(frag);
+      title.classList.add("split-words");
+      title.setAttribute("aria-label", title.textContent.replace(/\s+/g, " ").trim());
+    });
+
+    var show = function (el) { el.classList.add("words-in"); };
+
+    if (!("IntersectionObserver" in window)) {
+      titles.forEach(show);
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        show(e.target);
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.2 });
+
+    titles.forEach(function (t) { io.observe(t); });
+  }
+
+  /* == 9. Photos révélées par un volet jaune ============================ */
+  function initMediaWipe() {
+    var medias = $$(".media");
+    if (!medias.length || reduceMotion || !("IntersectionObserver" in window)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("wipe-in");
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.15 });
+
+    medias.forEach(function (m) {
+      m.classList.add("wipe-armed");
+      io.observe(m);
+    });
+  }
+
+  /* == 10. Inclinaison 3D et reflet au survol =========================== */
+  function initTilt() {
+    var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduceMotion || !fine) return;
+
+    $$(".card, .stat, .quote, .store, .form-card").forEach(function (el) {
+      el.classList.add("tilt");
+      var max = el.classList.contains("card--small") || el.classList.contains("stat") ? 7 : 4;
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width;
+        var y = (e.clientY - r.top) / r.height;
+        el.style.setProperty("--rx", ((0.5 - y) * max).toFixed(2) + "deg");
+        el.style.setProperty("--ry", ((x - 0.5) * max).toFixed(2) + "deg");
+        el.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+        el.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      });
+    });
+
+    // Halo qui suit le pointeur dans le panneau final.
+    $$(".cta-panel").forEach(function (panel) {
+      panel.addEventListener("pointermove", function (e) {
+        var r = panel.getBoundingClientRect();
+        panel.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%");
+        panel.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
+      });
+    });
+  }
+
+  /* == 11. Boutons magnétiques ========================================== */
+  function initMagnetic() {
+    var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduceMotion || !fine) return;
+
+    $$(".hero .btn, .cta-panel .btn, .store-cta .btn").forEach(function (btn) {
+      btn.classList.add("magnetic");
+      btn.addEventListener("pointermove", function (e) {
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - (r.left + r.width / 2);
+        var y = e.clientY - (r.top + r.height / 2);
+        btn.style.setProperty("--tx", (x * 0.22).toFixed(1) + "px");
+        btn.style.setProperty("--ty", (y * 0.3).toFixed(1) + "px");
+      });
+      btn.addEventListener("pointerleave", function () {
+        btn.style.setProperty("--tx", "0px");
+        btn.style.setProperty("--ty", "0px");
+      });
+    });
+  }
+
+  /* == 12. Repères de calage du héro : suivent la souris ================ */
+  function initHeroParallax() {
+    var hero = $(".hero");
+    var marks = $$(".reg-mark");
+    var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!hero || !marks.length || reduceMotion || !fine) return;
+
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      marks.forEach(function (m) {
+        var depth = parseFloat(m.getAttribute("data-depth") || "20");
+        m.style.setProperty("--px", (x * depth).toFixed(1) + "px");
+        m.style.setProperty("--py", (y * depth).toFixed(1) + "px");
+      });
+    });
+  }
+
+  /* == 13. Compteurs ===================================================== */
+  function initCounters() {
+    var nodes = $$("[data-count]");
+    if (!nodes.length) return;
+
+    var run = function (el) {
+      var target = parseInt(el.getAttribute("data-count"), 10);
+      if (reduceMotion || isNaN(target)) { el.textContent = String(target); return; }
+      var start = null;
+      var step = function (t) {
+        if (start === null) start = t;
+        var k = Math.min((t - start) / 1400, 1);
+        var eased = 1 - Math.pow(1 - k, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (k < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    if (!("IntersectionObserver" in window)) { nodes.forEach(run); return; }
+
+    if (!reduceMotion) nodes.forEach(function (n) { n.textContent = "0"; });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        run(e.target);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.6 });
+
+    nodes.forEach(function (n) { io.observe(n); });
+  }
+
+  /* == 14. Lignes du catalogue : apparition en cascade ================== */
+  function initRowStagger() {
+    $$(".family").forEach(function (fam) {
+      $$(".row", fam).forEach(function (row, i) {
+        row.classList.add("reveal");
+        row.style.setProperty("--d", (i * 70) + "ms");
+      });
+    });
+  }
+
+  /* == 15. En-tête masqué en descendant, réaffiché en remontant ========= */
+  function initHeaderAutoHide() {
+    var header = $(".site-header");
+    var burger = $(".burger");
+    if (!header) return;
+    var last = window.scrollY;
+    var ticking = false;
+
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        var y = window.scrollY;
+        var menuOpen = burger && burger.getAttribute("aria-expanded") === "true";
+        var hide = y > 320 && y > last + 4 && !menuOpen;
+        if (hide) header.classList.add("is-hidden");
+        else if (y < last - 4 || y <= 320) header.classList.remove("is-hidden");
+        last = y;
+        ticking = false;
+      });
+    }, { passive: true });
+
+    // Un élément de l'en-tête prend le focus clavier : on le réaffiche.
+    header.addEventListener("focusin", function () { header.classList.remove("is-hidden"); });
+  }
+
+  initRowStagger();
+  initSplitTitles();
   initReveal();
+  initMediaWipe();
+  initTilt();
+  initMagnetic();
+  initHeroParallax();
+  initCounters();
+  initHeaderAutoHide();
   initScrollUi();
   initSequence();
   initNav();

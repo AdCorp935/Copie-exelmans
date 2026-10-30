@@ -2492,3 +2492,291 @@ p { margin: 0; }
   .brand-name { font-size: 14px; }
   .brand-mark { width: 34px; height: 34px; font-size: 12px; }
 }
+
+/* 19. Animations et effets (version finale) ------------------------------ */
+
+/* Entrée de page en fondu. */
+body { animation: cx-page 0.6s ease both; }
+@keyframes cx-page { from { opacity: 0; } to { opacity: 1; } }
+
+/* Titres mot à mot (découpés par main.js). */
+.split-words .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.1em 0.06em 0.12em;
+  margin: -0.1em -0.06em -0.12em;
+}
+
+.split-words .wi {
+  display: inline-block;
+  transform: translateY(112%) rotate(4deg);
+  transform-origin: 0 100%;
+  transition: transform 0.95s var(--ease);
+  transition-delay: calc(var(--i, 0) * 55ms + 80ms);
+}
+
+.split-words.words-in .wi { transform: none; }
+
+/* Le surlignage jaune se trace après l'arrivée du mot. */
+.split-words .grad {
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.8s var(--ease) 0.9s;
+}
+.split-words.words-in .grad { background-size: 100% 100%; }
+
+/* Volet jaune qui découvre les photos. */
+.media.wipe-armed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--yellow);
+  transform: scaleX(1);
+  transform-origin: 100% 50%;
+  pointer-events: none;
+}
+
+.media.wipe-armed img {
+  scale: 1.18;
+  transition: scale 1.4s var(--ease) 0.1s, transform 0.6s var(--ease);
+}
+
+.media.wipe-in::after {
+  transform: scaleX(0);
+  transition: transform 1s cubic-bezier(0.7, 0, 0.2, 1) 0.15s;
+}
+
+.media.wipe-in img { scale: 1; }
+
+/* Inclinaison 3D + reflet jaune qui suit le pointeur. */
+.tilt { position: relative; }
+
+.card.reveal {
+  transition: opacity 0.75s var(--ease) var(--d, 0ms), filter 0.75s ease var(--d, 0ms),
+    transform 0.4s var(--ease), border-color 0.3s ease, box-shadow 0.35s ease;
+}
+
+.card.reveal.is-armed { transform: translateY(22px); }
+
+.card.tilt:hover {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px);
+}
+
+.stat.tilt:hover,
+.quote.tilt:hover,
+.store.tilt:hover,
+.form-card.tilt:hover {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
+}
+
+.quote.tilt,
+.store.tilt,
+.form-card.tilt { transition: transform 0.4s var(--ease), box-shadow 0.35s ease; }
+
+.store.tilt:hover,
+.quote.tilt:hover { box-shadow: 10px 10px 0 0 var(--yellow), 0 0 0 1px var(--ink); }
+
+.tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 212, 0, 0.2), transparent 62%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.tilt:hover::after { opacity: 1; }
+
+/* Boutons : reflet qui balaie + aimantation vers le pointeur. */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.5) 50%, transparent 75%);
+  transform: translateX(-130%);
+  transition: transform 0.75s var(--ease);
+  pointer-events: none;
+}
+
+.btn:hover::before,
+.btn:focus-visible::before { transform: translateX(130%); }
+
+.btn.magnetic,
+.btn.magnetic:hover,
+.btn.magnetic:focus-visible {
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+}
+
+/* En-tête qui s'efface en descendant. */
+.site-header {
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.45s var(--ease);
+}
+
+.site-header.is-hidden { transform: translateY(-101%); }
+
+/* Repères de calage dans le héro. */
+.reg-mark {
+  position: absolute;
+  z-index: 0;
+  width: 58px;
+  height: 58px;
+  color: var(--ink);
+  opacity: 0.55;
+  pointer-events: none;
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 0.7s var(--ease);
+}
+
+.reg-mark svg {
+  width: 100%;
+  height: 100%;
+  animation: cx-spin 26s linear infinite;
+}
+
+.reg-mark--b svg { animation-direction: reverse; animation-duration: 34s; }
+
+@keyframes cx-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 899px) {
+  .reg-mark { display: none; }
+}
+
+/* Balayage « laser » sur le bon de commande, une fois rempli. */
+.quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  z-index: 4;
+  background: var(--yellow);
+  box-shadow: 0 0 18px 5px rgba(255, 212, 0, 0.55);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quote:has(.quote-foot.is-in)::before { animation: cx-scan 1.5s var(--ease) 0.25s both; }
+
+@keyframes cx-scan {
+  0% { top: 0; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Double bandeau croisé noir / jaune. */
+.bands {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(70px, 9vw, 120px) 0 clamp(20px, 3vw, 40px);
+}
+
+.band {
+  width: 112%;
+  margin-left: -6%;
+  padding: 16px 0;
+  overflow: hidden;
+}
+
+.band--ink {
+  background: var(--ink);
+  color: #fff;
+  transform: rotate(2deg);
+}
+
+.band--yellow {
+  position: relative;
+  margin-top: -26px;
+  background: var(--yellow);
+  color: var(--ink);
+  border-block: 2px solid var(--ink);
+  transform: rotate(-2.4deg);
+}
+
+.band-track {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: max-content;
+  white-space: nowrap;
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 32px);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  animation: cx-marquee 30s linear infinite;
+}
+
+.band-track--rev { animation-direction: reverse; animation-duration: 36s; }
+
+.band-track i {
+  font-style: normal;
+  font-size: 0.7em;
+  color: var(--yellow);
+}
+
+.band--yellow .band-track i { color: var(--ink); }
+
+.bands:hover .band-track { animation-play-state: paused; }
+
+/* Panneau final : le halo suit aussi le pointeur. */
+.cta-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 120%), rgba(255, 212, 0, 0.22), transparent 65%);
+  transition: background 0.2s ease;
+}
+
+/* Petit pictogramme pastille qui « pulse » dans les badges. */
+.badge .dot { animation: cx-pulse 2.4s ease-in-out infinite; }
+
+@keyframes cx-pulse {
+  0%, 100% { box-shadow: 0 0 0 1.5px var(--ink), 0 0 0 0 rgba(255, 212, 0, 0.7); }
+  50% { box-shadow: 0 0 0 1.5px var(--ink), 0 0 0 6px rgba(255, 212, 0, 0); }
+}
+
+/* Mouvement réduit : tout reste lisible et immobile. */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .reg-mark svg,
+  .band-track,
+  .badge .dot,
+  .quote::before { animation: none !important; }
+  .split-words .wi { transform: none !important; transition: none !important; }
+  .media.wipe-armed::after { display: none; }
+  .media.wipe-armed img { scale: 1; }
+  .btn::before { display: none; }
+  .site-header.is-hidden { transform: none; }
+}
+
+/* Bon de commande : colonnes calibrées pour des formats et papiers (texte),
+   et non plus pour des prix. */
+.quote-grid { grid-template-columns: minmax(0, 1fr) 62px 108px; column-gap: 10px; }
+.quote-row .quote-price { font-size: 12px; }
+
+@media (min-width: 420px) {
+  .quote-grid { grid-template-columns: minmax(0, 1fr) 76px 128px; }
+}
+
+@media (min-width: 560px) {
+  .quote-grid { grid-template-columns: minmax(0, 1fr) 110px 170px; column-gap: 16px; }
+  .quote-row .quote-price { font-size: 13px; }
+}
+
+/* Exposant dans un titre découpé : il ne doit pas agrandir la ligne. */
+.split-words sup { line-height: 0; font-size: 0.5em; }
